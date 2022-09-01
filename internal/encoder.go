@@ -25,7 +25,7 @@ func (e *Encoder) Encode(b *Board) (string, error) {
 		cells := make([]string, 0, len(row))
 		for _, cell := range row {
 			if cell&BombCell == BombCell && e.openAll {
-				cell = OpenBomb
+				cell = OpenBombCell
 			}
 
 			cells = append(cells, cell.String())

@@ -9,7 +9,7 @@ const (
 	ClosedCell                    // 17
 	BombCell                      // 33
 
-	OpenBomb = OpenCell | BombCell // 41
+	OpenBombCell = OpenCell | BombCell // 41
 )
 
 func (c Cell) String() string {
@@ -17,7 +17,7 @@ func (c Cell) String() string {
 		return "*"
 	}
 
-	if c&OpenBomb == OpenBomb {
+	if c&OpenBombCell == OpenBombCell {
 		return "B"
 	}
 

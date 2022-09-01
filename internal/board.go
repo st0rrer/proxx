@@ -24,27 +24,27 @@ func NewBoard(size int, bombs int) *Board {
 	}
 
 	cellCount := int(math.Pow(float64(size), 2))
-	blackHoles := make(map[int]struct{})
+	bombSet := make(map[int]struct{})
 	for i := 0; i < bombs; i++ {
 		cell := rand.Intn(cellCount)
-		blackHoles[cell] = struct{}{}
+		bombSet[cell] = struct{}{}
 	}
 
-	for bh := range blackHoles {
-		i := bh / size
-		j := bh % size
+	for b := range bombSet {
+		x := b / size
+		y := b % size
 
-		board[i][j] |= BombCell
+		board[x][y] |= BombCell
 	}
 
 	return &Board{
 		board:      board,
 		size:       len(board),
-		emptyCells: cellCount - len(blackHoles),
+		emptyCells: cellCount - len(bombSet),
 	}
 }
 
-func (b *Board) IsBlackHole(x, y int) bool {
+func (b *Board) IsBomb(x, y int) bool {
 	cell := b.board[x][y]
 	return cell&BombCell == BombCell
 }
@@ -89,7 +89,7 @@ func (b *Board) openAdjacentCell(x, y int) (adjacent byte, bfs *Queue) {
 		adjacentY := y + d[1]
 
 		if adjacentX > -1 && adjacentX < b.size && adjacentY > -1 && adjacentY < b.size {
-			if b.IsBlackHole(adjacentX, adjacentY) {
+			if b.IsBomb(adjacentX, adjacentY) {
 				adjacent++
 			}
 			bfs.Push(b.size*adjacentX + adjacentY)

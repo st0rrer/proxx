@@ -76,7 +76,8 @@ func main() {
 				},
 				Commands: []*cli.Command{
 					{
-						Name: "open",
+						Name:  "open",
+						Usage: "Open the square within the x and y coordinates",
 						Flags: []cli.Flag{
 							&cli.IntFlag{
 								Name:     "x",
@@ -102,7 +103,7 @@ func main() {
 								return nil
 							}
 
-							if isBlackHole := board.IsBlackHole(x, y); isBlackHole {
+							if isBlackHole := board.IsBomb(x, y); isBlackHole {
 								if err := printBoard(true); err != nil {
 									log.Printf("failed to print board: %v", err)
 								}
